@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useDeleteUserMutation } from "@/redux/apis/userApiSlice";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 
 type Props = {
@@ -18,21 +18,10 @@ type Props = {
 };
 
 const UserDeleteDialog = ({ user }: Props) => {
-  const [deleteUser, { isLoading, isSuccess, isError, error }] =
-    useDeleteUserMutation();
+  const [deleteUser, { isLoading }] = useDeleteUserMutation();
 
   const [open, setOpen] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
-
-  useEffect(() => {
-    if (isSuccess) {
-      toast.success(`User ${name} deleted`);
-    }
-
-    if (isError) {
-      toast.error(`Failed to delete user ${name}`);
-    }
-  }, [name, isSuccess, isError, error]);
 
   const onOpenChange = (open: boolean) => {
     setOpen(open);
@@ -42,7 +31,19 @@ const UserDeleteDialog = ({ user }: Props) => {
   const onDelete = async (e: React.MouseEvent) => {
     e.stopPropagation();
     setName(user.name);
-    await deleteUser(user.id);
+
+    try {
+      await deleteUser(user.id);
+      toast.success(`User ${name} deleted`);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.log(`User Delete Dialog Error: ${error.message}`);
+      } else {
+        console.log("User Delete Dialog Error:", error);
+      }
+
+      toast.error(`Failed to delete User ID ${name}`);
+    }
   };
 
   return (

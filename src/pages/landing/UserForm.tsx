@@ -59,15 +59,6 @@ const UserForm = ({ user }: Props) => {
     reset(user ?? { name: "", email: "", contact: "" });
   }, [user, reset]);
 
-  useEffect(() => {
-    if (createUserState.isSuccess || updateUserState.isSuccess) {
-      toast.success(user?.id ? `User ID ${user.id} updated` : `User created`);
-    }
-    if (createUserState.isError || updateUserState.isError) {
-      toast.error(user?.id ? `Failed to update user` : "Failed to create user");
-    }
-  }, [createUserState, updateUserState, user]);
-
   const resetUserFormStates = () => {
     reset({
       name: "",
@@ -80,12 +71,25 @@ const UserForm = ({ user }: Props) => {
   };
 
   const onSubmit = async (data: FormValues) => {
-    if (user?.id) {
-      await updateUser({ ...user, ...data });
-    } else {
-      await createUser(data);
+    try {
+      if (user?.id) {
+        await updateUser({ ...user, ...data }).unwrap();
+        toast.success(`User ID ${user.id} updated`);
+      } else {
+        await createUser(data).unwrap();
+        toast.success("User created");
+      }
+
+      resetUserFormStates();
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.log(`User Form Error: ${error.message}`);
+      } else {
+        console.log("User Form Error:", error);
+      }
+
+      toast.error(user?.id ? "Failed to update user" : "Failed to create user");
     }
-    resetUserFormStates();
   };
 
   return (
