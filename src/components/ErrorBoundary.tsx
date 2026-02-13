@@ -1,3 +1,4 @@
+import { onBack } from "@/utils/onBack";
 import { Component, type ErrorInfo, type ReactNode } from "react";
 import type { NavigateFunction } from "react-router-dom";
 import { Button } from "./ui/button";
@@ -28,9 +29,7 @@ class ErrorBoundary extends Component<Props, State> {
 
   handleGoBack = () => {
     if (this.props.navigate) {
-      this.props.navigate(-1);
-    } else {
-      globalThis.history.back();
+      onBack(this.props.navigate);
     }
     this.setState({ hasError: false, error: null });
   };

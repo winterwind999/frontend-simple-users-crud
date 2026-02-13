@@ -3,6 +3,7 @@ import SkeletonComponent from "@/components/SkeletonComponent";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { useGetUserByIdQuery } from "@/redux/apis/userApiSlice";
+import { onBack } from "@/utils/onBack";
 import { ChevronLeftIcon } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -48,7 +49,7 @@ const ContactDetail = () => {
               type="button"
               variant="secondary"
               aria-label="back"
-              onClick={() => navigate(-1)}
+              onClick={() => onBack(navigate)}
             >
               <ChevronLeftIcon />
               Back
