@@ -17,3 +17,7 @@ type UpdateUserRequest = {
   email: string;
   contact: string;
 };
+
+type UserState = {
+  userId: number | null;
+};

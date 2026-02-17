@@ -69,11 +69,11 @@ const UsersList = () => {
 
   const tableContent = () => {
     if (data.length === 0) {
-      return <p className="font-bold mt-3">No users created yet...</p>;
+      return <p className="mt-3 font-bold">No users created yet...</p>;
     }
 
     if (users.length === 0) {
-      return <p className="font-bold mt-3">No user found</p>;
+      return <p className="mt-3 font-bold">No user found</p>;
     }
 
     return users.map((user: User) => (
@@ -112,13 +112,13 @@ const UsersList = () => {
   };
 
   return (
-    <Card className="h-full flex flex-col overflow-hidden">
-      <CardContent className="flex-1 flex flex-col min-h-0">
-        <div className="flex-1 overflow-y-auto min-h-0">
-          <div className="flex gap-3 items-center w-full">
+    <Card className="flex h-full flex-col overflow-hidden">
+      <CardContent className="flex min-h-0 flex-1 flex-col">
+        <div className="min-h-0 flex-1 overflow-y-auto">
+          <div className="flex w-full items-center gap-3">
             <p className="font-bold">Users List</p>
 
-            <div className="flex flex-1 me-3">
+            <div className="me-3 flex flex-1">
               <Input
                 id="search"
                 name="search"
