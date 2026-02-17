@@ -23,7 +23,7 @@ const SkeletonComponent = ({ type }: Props) => {
 
   if (type === "TEXT") {
     return (
-      <div className="flex w-full  flex-col gap-2">
+      <div className="flex w-full flex-col gap-2">
         <Skeleton className="h-4 w-full" />
         <Skeleton className="h-4 w-full" />
         <Skeleton className="h-4 w-3/4" />
@@ -33,7 +33,7 @@ const SkeletonComponent = ({ type }: Props) => {
 
   if (type === "FORM") {
     return (
-      <div className="flex w-full  flex-col gap-7">
+      <div className="flex w-full flex-col gap-7">
         <div className="flex flex-col gap-3">
           <Skeleton className="h-4 w-20" />
           <Skeleton className="h-8 w-full" />
@@ -49,7 +49,7 @@ const SkeletonComponent = ({ type }: Props) => {
 
   if (type === "TABLE") {
     return (
-      <div className="flex w-full  flex-col gap-2">
+      <div className="flex w-full flex-col gap-2">
         {Array.from({ length: 5 }).map((_, index) => (
           <div className="flex gap-4" key={index}>
             <Skeleton className="h-4 flex-1" />

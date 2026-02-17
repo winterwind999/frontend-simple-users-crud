@@ -7,7 +7,7 @@ const ErrorBoundaryWithNavigate = withNavigate(ErrorBoundary);
 const Layout = () => {
   return (
     <ErrorBoundaryWithNavigate>
-      <main className="h-screen p-3 overflow-hidden">
+      <main className="h-screen overflow-hidden p-3">
         <Outlet />
       </main>
     </ErrorBoundaryWithNavigate>
