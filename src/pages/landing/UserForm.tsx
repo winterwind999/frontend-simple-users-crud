@@ -82,12 +82,7 @@ const UserForm = ({ user }: Props) => {
 
       resetUserFormStates();
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        console.log(`User Form Error: ${error.message}`);
-      } else {
-        console.log("User Form Error:", error);
-      }
-
+      console.log("User Form Error:", error);
       toast.error(user?.id ? "Failed to update user" : "Failed to create user");
     }
   };

@@ -36,12 +36,7 @@ const UserDeleteDialog = ({ user }: Props) => {
       await deleteUser(user.id);
       toast.success(`User ${name} deleted`);
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        console.log(`User Delete Dialog Error: ${error.message}`);
-      } else {
-        console.log("User Delete Dialog Error:", error);
-      }
-
+      console.log("User Delete Dialog Error:", error);
       toast.error(`Failed to delete User ID ${name}`);
     }
   };

@@ -32,10 +32,10 @@ export const userApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     createUser: builder.mutation({
-      query: (createUserRequest: CreateUserRequest) => ({
+      query: (user: Omit<User, "id">) => ({
         url: API_ROUTES.users.create(),
         method: API_METHODS.POST,
-        body: createUserRequest,
+        body: user,
       }),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         const tempId = tempIdCounter--;
@@ -82,10 +82,10 @@ export const userApiSlice = apiSlice.injectEndpoints({
       },
     }),
     updateUser: builder.mutation({
-      query: (updateUserRequest: UpdateUserRequest) => ({
-        url: API_ROUTES.users.update(updateUserRequest.id),
+      query: (user: User) => ({
+        url: API_ROUTES.users.update(user.id),
         method: API_METHODS.PUT,
-        body: updateUserRequest,
+        body: user,
       }),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
