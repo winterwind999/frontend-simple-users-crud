@@ -26,9 +26,12 @@ import { toast } from "sonner";
 import z from "zod";
 
 const formSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  email: z.email("Invalid Email Address").min(1, "Email Address is required"),
-  contact: z.string().min(1, "Contact is required"),
+  name: z.string().trim().min(1, "Name is required"),
+  email: z
+    .email("Invalid Email Address")
+    .trim()
+    .min(1, "Email Address is required"),
+  contact: z.string().trim().min(1, "Contact is required"),
 });
 
 export type FormValues = z.infer<typeof formSchema>;
