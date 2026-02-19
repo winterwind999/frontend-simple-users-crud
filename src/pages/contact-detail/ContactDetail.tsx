@@ -1,44 +1,16 @@
-import PageNotFound from "@/components/PageNotFound";
-import SkeletonComponent from "@/components/SkeletonComponent";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { useGetUserByIdQuery } from "@/redux/apis/userApiSlice";
+import withGetUserById from "@/components/withGetUserById";
 import { onBack } from "@/utils/onBack";
 import { ChevronLeftIcon } from "lucide-react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const ContactDetail = () => {
+type Props = {
+  user: User;
+};
+
+const ContactDetail = ({ user }: Props) => {
   const navigate = useNavigate();
-  const { id } = useParams<{ id: string }>();
-
-  const {
-    data: user,
-    isLoading,
-    isSuccess,
-    isError,
-    error,
-  } = useGetUserByIdQuery(Number(id), {
-    pollingInterval: 60000,
-    refetchOnFocus: true,
-    refetchOnMountOrArgChange: true,
-    skip: !id,
-  });
-
-  if (!id) {
-    return <PageNotFound message="Invalid User ID" />;
-  }
-
-  if (isLoading) {
-    return <SkeletonComponent type="CARD" />;
-  }
-
-  if (isError) {
-    throw error;
-  }
-
-  if (!isSuccess || !user) {
-    return <PageNotFound message="User not found" />;
-  }
 
   return (
     <div>
@@ -76,4 +48,6 @@ const ContactDetail = () => {
   );
 };
 
-export default ContactDetail;
+const ContactDetailWithUser = withGetUserById(ContactDetail);
+
+export default ContactDetailWithUser;

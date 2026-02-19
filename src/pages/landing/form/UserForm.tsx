@@ -13,11 +13,12 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
+import withGetUserById from "@/components/withGetUserById";
 import {
   useCreateUserMutation,
   useUpdateUserMutation,
 } from "@/redux/apis/userApiSlice";
-import { setUserId } from "@/redux/stores/userSlice";
+import { selectUserId, setUserId } from "@/redux/stores/userSlice";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -184,4 +185,9 @@ const UserForm = ({ user }: Props) => {
   );
 };
 
-export default UserForm;
+const UserFormWithUser = withGetUserById(UserForm, {
+  required: false,
+  getId: selectUserId,
+});
+
+export default UserFormWithUser;

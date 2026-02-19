@@ -1,11 +1,9 @@
-import { onBack } from "@/utils/onBack";
+import { ROUTER_ROUTES } from "@/utils/constants/ROUTER_ROUTES";
 import { Component, type ErrorInfo, type ReactNode } from "react";
-import type { NavigateFunction } from "react-router-dom";
 import { Button } from "./ui/button";
 
 type Props = {
   children: ReactNode;
-  navigate: NavigateFunction;
 };
 
 type State = {
@@ -28,10 +26,17 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   handleGoBack = () => {
-    if (this.props.navigate) {
-      onBack(this.props.navigate);
-    }
     this.setState({ hasError: false, error: null });
+
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      window.location.href = ROUTER_ROUTES.LANDING;
+    }
+  };
+
+  handleReload = () => {
+    window.location.reload();
   };
 
   render() {
@@ -48,15 +53,25 @@ class ErrorBoundary extends Component<Props, State> {
               </h1>
               <p className="text-gray-500">{errorMessage}</p>
             </div>
-            <Button
-              type="button"
-              variant="secondary"
-              aria-label="back"
-              className="inline-flex h-10 items-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:ring-1 focus-visible:ring-gray-950 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
-              onClick={this.handleGoBack}
-            >
-              Back
-            </Button>
+
+            <div className="flex items-center justify-center gap-3">
+              <Button
+                type="button"
+                variant="secondary"
+                aria-label="go-back"
+                onClick={this.handleGoBack}
+              >
+                Go Back
+              </Button>
+
+              <Button
+                type="button"
+                aria-label="reload"
+                onClick={this.handleReload}
+              >
+                Reload Page
+              </Button>
+            </div>
           </div>
         </div>
       );
