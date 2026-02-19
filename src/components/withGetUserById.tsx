@@ -11,7 +11,7 @@ type WithGetUserByIdProps = {
 
 type WithGetUserByIdOptions = {
   getId?: (state: RootState) => number | null;
-  required?: boolean; // default: true
+  required?: boolean;
 };
 
 const withGetUserById = <T extends WithGetUserByIdProps>(
@@ -59,7 +59,12 @@ const withGetUserById = <T extends WithGetUserByIdProps>(
       return <PageNotFound message="User not found" />;
     }
 
-    return <WrappedComponent {...(props as T)} user={user} />;
+    return (
+      <WrappedComponent
+        {...(props as T)}
+        user={resolvedId ? user : undefined}
+      />
+    );
   };
 };
 

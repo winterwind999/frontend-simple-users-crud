@@ -10,7 +10,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useDeleteUserMutation } from "@/redux/apis/userApiSlice";
+import { setUserId } from "@/redux/stores/userSlice";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 
 type Props = {
@@ -18,6 +20,8 @@ type Props = {
 };
 
 const UserDeleteDialog = ({ user }: Props) => {
+  const dispatch = useDispatch();
+
   const [deleteUser, { isLoading }] = useDeleteUserMutation();
 
   const [open, setOpen] = useState<boolean>(false);
@@ -34,6 +38,7 @@ const UserDeleteDialog = ({ user }: Props) => {
 
     try {
       await deleteUser(user.id);
+      dispatch(setUserId({ userId: null }));
       toast.success(`User ${name} deleted`);
     } catch (error: unknown) {
       console.log("User Delete Dialog Error:", error);
